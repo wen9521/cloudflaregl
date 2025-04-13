@@ -1,6 +1,9 @@
 import requests
 from telegram.ext import CommandHandler
 
+CLOUDFLARE_API_TOKEN = "YOUR_CLOUDFLARE_API_TOKEN"
+CLOUDFLARE_API_URL = "https://api.cloudflare.com/client/v4/"
+
 def create_load_balancer(update, context):
     try:
         args = context.args
