@@ -8,7 +8,7 @@ def clear_cache(update, context):
     try:
         args = context.args
         if len(args) < 1:
-            update.message.reply_text("Usage: /clear_cache <zone_id>")
+            update.message.reply_text("用法：/clear_cache <zone_id>")
             return
 
         zone_id = args[0]
@@ -19,10 +19,10 @@ def clear_cache(update, context):
         response = requests.post(url, headers=headers, json=data)
 
         if response.status_code == 200:
-            update.message.reply_text("Cache cleared successfully!")
+            update.message.reply_text("缓存已成功清除！")
         else:
-            update.message.reply_text(f"Failed to clear cache: {response.json().get('errors')}")
+            update.message.reply_text(f"清除缓存失败：{response.json().get('errors')}")
     except Exception as e:
-        update.message.reply_text(f"Error: {str(e)}")
+        update.message.reply_text(f"错误：{str(e)}")
 
 clear_cache_handler = CommandHandler('clear_cache', clear_cache)
