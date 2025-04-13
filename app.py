@@ -1,21 +1,23 @@
 from flask import Flask, request
 from telegram import Update
-from telegram.ext import Dispatcher
-from bot import bot
+from telegram.ext import Application, CommandHandler
 from modules import start, cloudflare, help
 
 app = Flask(__name__)
 
-# Telegram Bot Dispatcher
-dispatcher = Dispatcher(bot, None, workers=0)
-dispatcher.add_handler(start.handler)
-dispatcher.add_handler(cloudflare.handler)
-dispatcher.add_handler(help.handler)
+# Initialize the Telegram Bot Application
+bot_application = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
+
+# Add Command Handlers
+bot_application.add_handler(start.handler)
+bot_application.add_handler(cloudflare.handler)
+bot_application.add_handler(help.handler)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    update = Update.de_json(request.get_json(), bot)
-    dispatcher.process_update(update)
+    # Process the incoming update
+    update = Update.de_json(request.get_json(), bot_application.bot)
+    bot_application.update_queue.put(update)
     return "OK", 200
 
 if __name__ == '__main__':
