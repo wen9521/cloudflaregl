@@ -13,6 +13,11 @@ bot_application.add_handler(start.handler)
 bot_application.add_handler(cloudflare.handler)
 bot_application.add_handler(help.handler)
 
+# Define a root route to handle `/`
+@app.route('/')
+def index():
+    return "Telegram Cloudflare Bot is running!"
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     # Process the incoming update
