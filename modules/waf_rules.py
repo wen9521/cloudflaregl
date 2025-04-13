@@ -8,28 +8,30 @@ def add_waf_rule(update, context):
     try:
         args = context.args
         if len(args) < 3:
-            update.message.reply_text("Usage: /add_waf_rule <action> <field> <value>")
+            update.message.reply_text("用法：/add_waf_rule <action> <field> <value>")
             return
 
-        action, field, value = args[0], args[1], args[2]
-        zone_id = "YOUR_CLOUDFLARE_ZONE_ID"
+        action = args[0]
+        field = args[1]
+        value = args[2]
 
-        url = f"{CLOUDFLARE_API_URL}zones/{zone_id}/firewall/rules"
+        url = f"{CLOUDFLARE_API_URL}zones/YOUR_ZONE_ID/firewall/rules"
         headers = {"Authorization": f"Bearer {CLOUDFLARE_API_TOKEN}"}
         data = {
             "action": action,
             "filter": {
-                "expression": f"{field} eq {value}"
-            }
+                "expression": f"{field} eq \"{value}\""
+            },
+            "description": "Added via Telegram Bot"
         }
 
         response = requests.post(url, headers=headers, json=data)
 
         if response.status_code == 200:
-            update.message.reply_text(f"WAF rule added: {action} {field} {value}")
+            update.message.reply_text("WAF 规则已成功添加！")
         else:
-            update.message.reply_text(f"Failed to add WAF rule: {response.json().get('errors')}")
+            update.message.reply_text(f"WAF 规则添加失败：{response.json().get('errors')}")
     except Exception as e:
-        update.message.reply_text(f"Error: {str(e)}")
+        update.message.reply_text(f"错误：{str(e)}")
 
 add_waf_handler = CommandHandler('add_waf_rule', add_waf_rule)
