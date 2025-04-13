@@ -1,29 +1,12 @@
-from flask import Flask, request
-from telegram import Update
-from telegram.ext import Application, CommandHandler
-from modules import start, cloudflare, help
+from modules.cache_management import clear_cache_handler
+from modules.waf_rules import add_waf_handler
+from modules.domain_status import check_domain_status_handler
+from modules.load_balancer import create_load_balancer_handler
+from modules.performance_optimization import toggle_brotli_handler
 
-app = Flask(__name__)
-
-# Initialize the Telegram Bot Application
-bot_application = Application.builder().token("YOUR_TELEGRAM_BOT_TOKEN").build()
-
-# Add Command Handlers
-bot_application.add_handler(start.handler)
-bot_application.add_handler(cloudflare.handler)
-bot_application.add_handler(help.handler)
-
-# Define a root route to handle `/`
-@app.route('/')
-def index():
-    return "Telegram Cloudflare Bot is running!"
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    # Process the incoming update
-    update = Update.de_json(request.get_json(), bot_application.bot)
-    bot_application.update_queue.put(update)
-    return "OK", 200
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# 添加所有命令处理程序
+dispatcher.add_handler(clear_cache_handler)
+dispatcher.add_handler(add_waf_handler)
+dispatcher.add_handler(check_domain_status_handler)
+dispatcher.add_handler(create_load_balancer_handler)
+dispatcher.add_handler(toggle_brotli_handler)
