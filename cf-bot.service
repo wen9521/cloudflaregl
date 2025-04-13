@@ -1,0 +1,11 @@
+[Unit]
+Description=CF Management Bot
+
+[Service]
+ExecStart=/bin/bash %h/cf-bot/run.sh
+Restart=always
+User=wenxiu778899
+WorkingDirectory=%h/cf-bot
+
+[Install]
+WantedBy=multi-user.target
