@@ -1,6 +1,7 @@
 import os
 import fcntl
 import logging
+import asyncio  # Ensure asyncio is imported
 import subprocess
 from datetime import datetime
 from dotenv import load_dotenv
