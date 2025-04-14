@@ -19,10 +19,16 @@
 pip install -r requirements.txt
 ```
 
-### 3. 部署到 Render
-- 在 Render 创建一个 Web Service。
-- 设置环境变量。
-- 部署代码。
+### 3. 运行应用
+**开发环境：**
+```bash
+python3 app.py
+```
+
+**生产环境（Gunicorn）：**
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
 
 ### 4. 设置 Webhook
 访问 `/set_webhook` 端点以设置 Webhook。

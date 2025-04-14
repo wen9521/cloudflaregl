@@ -15,6 +15,10 @@ ADMIN_ID = int(os.getenv("ADMIN_ID"))  # 管理员的 Telegram ID
 bot = telebot.TeleBot(TOKEN)
 db = Database()
 
+@app.route('/')
+def home():
+    return "Telegram VPN Bot is running!", 200
+
 @app.route(f"/{TOKEN}", methods=['POST'])
 def webhook():
     json_str = request.get_data().decode('UTF-8')
@@ -26,7 +30,7 @@ def webhook():
 def set_webhook():
     bot.remove_webhook()
     bot.set_webhook(url=f"{WEBHOOK_URL}/{TOKEN}")
-    return "Webhook set", 200
+    return "Webhook set successfully!", 200
 
 # 添加节点
 @bot.message_handler(commands=['add_node'])

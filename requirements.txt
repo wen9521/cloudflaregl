@@ -1,4 +1,5 @@
-flask
+Flask
 pyTelegramBotAPI
 qrcode
 requests
+gunicorn
