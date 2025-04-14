@@ -1,34 +1,39 @@
 # Telegram VPN Bot
 
-## 功能
-- 节点管理（添加、查看、删除）
-- 二维码生成
-- 节点订阅解析
-- 节点延迟测速
-- 多语言支持
+A Telegram Bot for managing VPN nodes, generating QR codes, and more.
 
-## 部署步骤
+## Features
+- Add, list, and remove VPN nodes.
+- Generate QR codes for VPN configuration.
+- Multilingual support (currently English).
+- Lightweight and compatible with Render deployment.
 
-### 1. 配置环境变量
-- `TELEGRAM_BOT_TOKEN`: Telegram Bot 的 Token。
-- `WEBHOOK_URL`: Render 提供的 Webhook URL。
-- `ADMIN_ID`: 管理员的 Telegram ID。
+## Setup
+1. **Environment Variables**:
+   - `TELEGRAM_BOT_TOKEN`: Your Telegram Bot token.
+   - `WEBHOOK_URL`: Your Render service's public URL.
+   - `ADMIN_ID`: Your Telegram user ID.
 
-### 2. 安装依赖
-```bash
-pip install -r requirements.txt
-```
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 3. 运行应用
-**开发环境：**
-```bash
-python3 app.py
-```
+3. **Run the bot locally**:
+   ```bash
+   python3 app.py
+   ```
 
-**生产环境（Gunicorn）：**
-```bash
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
+4. **Deploy to Render**:
+   - Add environment variables in Render's dashboard.
+   - Set the `Procfile` for production deployment.
 
-### 4. 设置 Webhook
-访问 `/set_webhook` 端点以设置 Webhook。
+5. **Set Webhook**:
+   Access `/set_webhook` endpoint to set the webhook.
+
+## Commands
+- `/start` - Start the bot.
+- `/help` - Show help message.
+- `/add_node` - Add a VPN node.
+- `/list_nodes` - List all VPN nodes.
+- `/remove_node` - Remove a VPN node.
