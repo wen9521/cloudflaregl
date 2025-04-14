@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn bot.main:main
+gunicorn bot.main:wsgi
