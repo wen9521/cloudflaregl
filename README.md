@@ -1,47 +1,28 @@
-# Telegram Cloudflare Manager Bot
+# Telegram VPN Bot
 
-A modular Telegram Bot to manage Cloudflare resources, deployed using Render.
+## 功能
+- 节点管理（添加、查看、删除）
+- 二维码生成
+- 节点订阅解析
+- 节点延迟测速
+- 多语言支持
 
-## Features
-- **Modular Design**: Easily extendable with new commands.
-- **Webhook Deployment**: Uses Telegram Webhook for efficient updates.
-- **Cloudflare Management**: List DNS records and more.
+## 部署步骤
 
-## Setup Instructions
+### 1. 配置环境变量
+- `TELEGRAM_BOT_TOKEN`: Telegram Bot 的 Token。
+- `WEBHOOK_URL`: Render 提供的 Webhook URL。
+- `ADMIN_ID`: 管理员的 Telegram ID。
 
-### Prerequisites
-1. Telegram Bot Token: Create a bot using [BotFather](https://core.telegram.org/bots#botfather).
-2. Cloudflare API Token: Generate a token from Cloudflare with the necessary permissions.
-3. Render Account: Sign up at [Render](https://render.com/).
+### 2. 安装依赖
+```bash
+pip install -r requirements.txt
+```
 
-### Local Development
-1. Clone this repository.
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the Flask app locally:
-   ```bash
-   python app.py
-   ```
+### 3. 部署到 Render
+- 在 Render 创建一个 Web Service。
+- 设置环境变量。
+- 部署代码。
 
-### Deployment to Render
-1. Push this repository to GitHub or any Git provider.
-2. Create a new **Web Service** on Render.
-3. Use `render.yaml` for automatic deployment configuration.
-4. Set environment variables in Render:
-   - `API_TOKEN`
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ZONE_ID`
-5. Deploy and set the Telegram Webhook:
-   ```bash
-   curl -X POST "https://api.telegram.org/bot<YOUR_API_TOKEN>/setWebhook?url=https://<YOUR_RENDER_URL>/webhook"
-   ```
-
-## Commands
-- `/start`: Start the bot.
-- `/help`: Display help message.
-- `/list_dns`: List Cloudflare DNS records.
-
-## License
-MIT
+### 4. 设置 Webhook
+访问 `/set_webhook` 端点以设置 Webhook。
