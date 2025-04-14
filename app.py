@@ -24,11 +24,10 @@ def webhook():
     try:
         json_str = request.get_data().decode('UTF-8')
         update = telebot.types.Update.de_json(json_str)
-        print(f"Incoming Webhook Data: {json_str}")  # Debugging: Log incoming data
         bot.process_new_updates([update])
         return "OK", 200
     except Exception as e:
-        print(f"Error processing webhook: {e}")  # Log any errors
+        print(f"Error processing webhook: {e}")
         return "Internal Server Error", 500
 
 @app.route('/set_webhook', methods=['GET'])
