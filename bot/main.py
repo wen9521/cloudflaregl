@@ -1,6 +1,5 @@
-import os
+from flask import Flask, request, jsonify
 from telegram.ext import ApplicationBuilder, CommandHandler
-from flask import Flask, request
 
 from bot.handlers.zones import list_zones
 from bot.handlers.cache import purge_cache
@@ -21,11 +20,16 @@ def create_app():
 
 telegram_app = create_app()
 
+# Root endpoint for service status
+@flask_app.route("/", methods=["GET"])
+def home():
+    return jsonify({"status": "Service is live 🎉", "description": "Telegram Bot is running!"}), 200
+
 # Webhook route for Telegram
 @flask_app.route(f"/webhook/{TELEGRAM_BOT_TOKEN}", methods=["POST"])
 def webhook():
     if request.method == "POST":
-        update = telegram_app.update_queue.put(request.get_json())
+        telegram_app.update_queue.put(request.get_json())
         return "OK", 200
 
 # WSGI Entry Point
