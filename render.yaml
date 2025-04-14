@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: telegram-cloudflare-bot
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app -b 0.0.0.0:$PORT"
+    envVars:
+      - key: API_TOKEN
+        value: "YOUR_TELEGRAM_BOT_TOKEN"
+      - key: CLOUDFLARE_API_TOKEN
+        value: "YOUR_CLOUDFLARE_API_TOKEN"
+      - key: CLOUDFLARE_ZONE_ID
+        value: "YOUR_CLOUDFLARE_ZONE_ID"
