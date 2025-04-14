@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn bot.main:wsgi
+gunicorn --bind 0.0.0.0:$PORT bot.main:flask_app
