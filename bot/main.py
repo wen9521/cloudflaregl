@@ -3,15 +3,19 @@ from bot.handlers.zones import list_zones
 from bot.handlers.cache import purge_cache
 from config.settings import TELEGRAM_BOT_TOKEN
 
-def main():
+# Define a WSGI-compatible function
+def create_app():
     application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
 
     # Register command handlers
     application.add_handler(CommandHandler("list_zones", list_zones))
     application.add_handler(CommandHandler("purge_cache", purge_cache))
     
-    print("Bot is running...")
-    application.run_polling()
+    return application
 
-if __name__ == "__main__":
-    main()
+# WSGI application for Gunicorn
+def wsgi(environ, start_response):
+    app = create_app()
+    app.run_polling()
+    start_response("200 OK", [("Content-Type", "text/plain")])
+    return [b"Telegram Bot is running."]
